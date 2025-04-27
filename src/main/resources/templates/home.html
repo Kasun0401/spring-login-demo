@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Your App</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+<header class="dashboard-header">
+  <div class="header-container">
+    <div class="logo-container">
+      <div class="logo">YourApp</div>
+    </div>
+
+    <div class="user-menu">
+      <div class="notifications">
+        <button class="icon-button" aria-label="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge">3</span>
+        </button>
+      </div>
+
+      <div class="user-profile dropdown">
+        <button class="dropdown-toggle" aria-expanded="false">
+          <div class="avatar">
+            <span th:text="${#strings.substring(username, 0, 1).toUpperCase()}">U</span>
+          </div>
+          <span class="username" th:text="${username}">User</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-menu">
+          <a href="/profile" class="dropdown-item">
+            <i class="fas fa-user"></i> My Profile
+          </a>
+          <a href="/settings" class="dropdown-item">
+            <i class="fas fa-cog"></i> Settings
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="/logout" class="dropdown-item logout">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="dashboard-container">
+  <nav class="sidebar">
+    <ul class="nav-menu">
+      <li class="nav-item active">
+        <a href="/dashboard">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/projects">
+          <i class="fas fa-project-diagram"></i>
+          <span>Projects</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/messages">
+          <i class="fas fa-envelope"></i>
+          <span>Messages</span>
+          <span class="badge">5</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/analytics">
+          <i class="fas fa-chart-line"></i>
+          <span>Analytics</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/settings">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <a href="/help" class="help-link">
+        <i class="fas fa-question-circle"></i>
+        <span>Help & Support</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="content-area">
+    <div class="welcome-banner">
+      <div class="welcome-text">
+        <h1>Welcome back, <span th:text="${username}">User</span>!</h1>
+        <p>Here's what's happening with your account today.</p>
+      </div>
+      <div class="date-display">
+        <i class="fas fa-calendar"></i>
+        <span id="current-date">April 27, 2025</span>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="card stats-card">
+        <div class="card-header">
+          <h3>Quick Stats</h3>
+        </div>
+        <div class="card-content">
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <div class="stat-details">
+              <span class="stat-value">1,254</span>
+              <span class="stat-label">Profile Views</span>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-details">
+              <span class="stat-value">48</span>
+              <span class="stat-label">Team Members</span>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <div class="stat-details">
+              <span class="stat-value">12</span>
+              <span class="stat-label">Active Projects</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card activity-card">
+        <div class="card-header">
+          <h3>Recent Activity</h3>
+        </div>
+        <div class="card-content">
+          <div class="activity-item">
+            <div class="activity-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="activity-details">
+              <p>You completed the onboarding process</p>
+              <span class="timestamp">2 hours ago</span>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="activity-details">
+              <p>Account created successfully</p>
+              <span class="timestamp">Today</span>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon">
+              <i class="fas fa-sign-in-alt"></i>
+            </div>
+            <div class="activity-details">
+              <p>First login recorded</p>
+              <span class="timestamp">Today</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card getting-started">
+      <div class="card-header">
+        <h3>Getting Started</h3>
+      </div>
+      <div class="card-content">
+        <div class="steps-container">
+          <div class="step completed">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Create Account</h4>
+              <p>Your account has been successfully created.</p>
+            </div>
+            <div class="step-status">
+              <i class="fas fa-check-circle"></i>
+            </div>
+          </div>
+          <div class="step completed">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Complete Profile</h4>
+              <p>Add your details to personalize your experience.</p>
+            </div>
+            <div class="step-status">
+              <i class="fas fa-check-circle"></i>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Explore Features</h4>
+              <p>Discover all the amazing things you can do.</p>
+            </div>
+            <div class="step-status">
+              <a href="/tour" class="step-button">Start Tour</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Set current date
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', options);
+
+    // User dropdown functionality
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    dropdownToggle.addEventListener('click', function() {
+      const dropdownMenu = this.nextElementSibling;
+      dropdownMenu.classList.toggle('show');
+      this.setAttribute('aria-expanded', dropdownMenu.classList.contains('show'));
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('.dropdown')) {
+        const dropdowns = document.querySelectorAll('.dropdown-menu');
+        dropdowns.forEach(dropdown => dropdown.classList.remove('show'));
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+  });
+</script>
+</body>
+</html>

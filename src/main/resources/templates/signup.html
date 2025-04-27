@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Your App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<div class="page-container">
+    <div class="form-container">
+        <div class="form-header">
+            <h1>Create Account</h1>
+            <p class="subtitle">Join our community today</p>
+        </div>
+
+        <form action="/signup" method="post" th:object="${user}" class="auth-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" th:field="*{username}" placeholder="Choose a username" required>
+                </div>
+                <span class="error-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" th:field="*{email}" placeholder="Enter your email address" required>
+                </div>
+                <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" th:field="*{password}" placeholder="Create a strong password" required>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <span class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                <div class="password-strength">
+                    <div class="strength-meter">
+                        <div class="meter-segment"></div>
+                        <div class="meter-segment"></div>
+                        <div class="meter-segment"></div>
+                        <div class="meter-segment"></div>
+                    </div>
+                    <span class="strength-text">Password strength</span>
+                </div>
+            </div>
+
+            <div class="form-group terms-checkbox">
+                <label class="checkbox-container">
+                    <input type="checkbox" name="terms" id="terms" required>
+                    <span class="checkmark"></span>
+                    I agree to the <a href="#" class="highlight-link">Terms of Service</a> and <a href="#" class="highlight-link">Privacy Policy</a>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="primary-button">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </div>
+        </form>
+
+        <div class="auth-footer">
+            <p>Already have an account? <a href="/login" class="highlight-link">Log in</a></p>
+        </div>
+    </div>
+
+    <div class="brand-panel">
+        <div class="brand-content">
+            <div class="logo">YourApp</div>
+            <h2>Join thousands of happy users</h2>
+            <p>Create your account in just a few steps and start your journey with us.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const togglePassword = document.querySelector('.toggle-password');
+        const passwordInput = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Toggle icon
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+
+        // Simple password strength meter
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            const segments = document.querySelectorAll('.meter-segment');
+            const strengthText = document.querySelector('.strength-text');
+
+            // Reset
+            segments.forEach(segment => segment.className = 'meter-segment');
+
+            if (password.length === 0) {
+                strengthText.textContent = 'Password strength';
+                return;
+            }
+
+            // Very basic strength calculation
+            let strength = 0;
+            if (password.length > 6) strength++;
+            if (password.length > 10) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            const strengthLevel = Math.min(4, strength);
+
+            // Update UI
+            for (let i = 0; i < strengthLevel; i++) {
+                segments[i].classList.add(
+                    strengthLevel === 1 ? 'weak' :
+                        strengthLevel === 2 ? 'fair' :
+                            strengthLevel === 3 ? 'good' : 'strong'
+                );
+            }
+
+            strengthText.textContent =
+                strengthLevel === 0 ? 'Too weak' :
+                    strengthLevel === 1 ? 'Weak' :
+                        strengthLevel === 2 ? 'Fair' :
+                            strengthLevel === 3 ? 'Good' : 'Strong';
+        });
+    });
+</script>
+</body>
+</html>
